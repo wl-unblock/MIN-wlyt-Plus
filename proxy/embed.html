@@ -191,7 +191,9 @@
         });
 
         const connection = new BareMux.BareMuxConnection("/prxy/baremux/worker.js");
+        const localWispUrl = `${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/wisp/`;
         const wispServers = [
+            localWispUrl,
             "wss://wisp.rhw.one/",     
             "wss://wisp.mercurywork.shop/",  
            // "wss://wisp.43059.lrga.space/",
@@ -362,5 +364,5 @@
         if (document.readyState === 'complete') init();
         else window.addEventListener('load', init);
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3d550a82ae52d64',t:'MTc4OTc4NjU2Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
