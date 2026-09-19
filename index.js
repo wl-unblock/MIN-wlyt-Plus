@@ -1,4 +1,5 @@
 const express = require("express");
+const http = require("http");
 const path = require("path");
 const yts = require("youtube-search-api");
 const fetch = require("node-fetch");
@@ -6,7 +7,15 @@ const cookieParser = require("cookie-parser");
 const https = require("https");
 const fs = require('fs');
 
+let wispServer = null;
+try {
+  wispServer = require('@mercuryworkshop/wisp-js/server');
+} catch (e) {
+  console.warn('[@mercuryworkshop/wisp-js] not loaded:', e.message);
+}
+
 const app = express();
+const server = http.createServer();
 const port = process.env.PORT || 3000;
 
 app.set("views", path.join(__dirname, "views"));
@@ -2141,14 +2150,10 @@ app.get("/img/:videoId", (req, res) => {
 
 app.get('/stream-network/:videoId', (req, res) => {
     const videoId = req.params.videoId;
-    
     const host = req.get('host');
-    
-    // 強制的にhttpsURLスキームを返すためhttpしか対応していないとエラーを返します。。
-    const baseUrl = `https://${host}`;
-    
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'http';
+    const baseUrl = `${protocol}://${host}`;
     const responseText = `${baseUrl}/proxy/embed.html#https://www.youtube-nocookie.com/embed/${videoId}`;
-    
     res.send(responseText);
 });
 
@@ -2393,6 +2398,9 @@ app.get("/api/1-search", async (req, res, next) => {
  *     └── register-sw.mjs
  */
 app.use('/proxy', express.static(PROXY_DIR));
+app.use('/uv', express.static(path.join(PROXY_DIR, 'uv')));
+app.use('/prxy', express.static(path.join(PROXY_DIR, 'prxy')));
+
 app.use((req, res, next) => {
     if (res.headersSent) return next();
 
@@ -2410,10 +2418,27 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.use((req, res) => res.status(404).sendFile(path.join(__dirname, "public", "error.html")));
 app.use((err, req, res, next) => {
   res.status(500).sendFile(path.join(__dirname, "public", "error.html"));
 });
 
-app.listen(port, () => console.log(`Server is running on port \${port}`));
+// HTTP リクエストの紐付け
+server.on('request', (req, res) => {
+  app(req, res);
+});
+
+// Wisp WebSocket 処理（自前Wispサーバー）
+server.on('upgrade', (req, socket, head) => {
+  if (req.url.endsWith('/wisp/') || req.url.startsWith('/wisp')) {
+    if (wispServer && wispServer.server && typeof wispServer.server.routeRequest === 'function') {
+      wispServer.server.routeRequest(req, socket, head);
+    } else {
+      socket.end();
+    }
+  } else {
+    socket.end();
+  }
+});
+
+server.listen(port, '0.0.0.0', () => console.log(`Server is running on port ${port}`));
