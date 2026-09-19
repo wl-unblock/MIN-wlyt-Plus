@@ -27,6 +27,7 @@
     "undici": "^6.19.8",
     "youtube-search-api": "^1.2.2",
 
+    "@mercuryworkshop/wisp-js": "^0.5.0",
     "dotenv": "^16.3.1",
 
     "axios": "^1.6.0",
