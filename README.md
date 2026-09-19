@@ -55,6 +55,10 @@ node index.js
 ---
 
 ## 更新履歴(min-wlyt-plus)
+### ver1.0.5
+ - Elixir-network、stream-proxy、nodeproxyを修正。
+ - index.jsからwispserverを建て、localhostへのリクエストも可能にする。
+ - 依存関係の整理
 ### ver1.0.4
  - Elixir-networkでのnode errorを修正。
  - 漫画raw・anime・映画は著作権違反ページ（dmca）に転移するように修正。（これによりrenderやrailwayにデプロイした際にbanされるリスクが低くなります、あとねむいが作ったやつ普通に犯罪だからこっちgithubアカウントとかbanされたらだるい。minoには許可とった。）
