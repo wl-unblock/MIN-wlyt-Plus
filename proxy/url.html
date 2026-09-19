@@ -173,7 +173,9 @@
         const connection = new BareMux.BareMuxConnection("/prxy/baremux/worker.js");
         
 
+        const localWispUrl = `${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/wisp/`;
         const wispServers = [
+            { url: localWispUrl, name: "Local Server (組み込みWisp)" },
             { url: "wss://wisp.rhw.one/", name: "Rammerhead" },     
             { url: "wss://anura.pro/", name: "AnuraOS" },
             { url: "wss://phantom.lol/wisp/", name: "ShadowV3" },
@@ -363,5 +365,5 @@
         if (document.readyState === 'complete') init();
         else window.addEventListener('load', init);
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3d5571bdb6d2d64',t:'MTc4OTc4NjgyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
