@@ -240,13 +240,13 @@ https://github.com/mino-hobby-pro/UV-Static_Netlify
 ---
 ## 開発メンバー
 
-・<a href="https://github.com/woolisbest-honke">woolisbest</a>  
-・<a href="https://github.com/mino-hobby-pro">mino</a>  
-・<a href="https://github.com/myproxy0108-prog">ねむい</a>  
-・<a href="https://github.com//raku-ringo">raku-ringo</a>  
-・<a href="https://github.com/Sou930">Sou930</a>  
-・<a href="https://github.com/KA1121Studio">KA1121Studio</a>  
-・<a href="https://github.com/kiki riki">kiki riki</a>  
+ - <a href="https://github.com/woolisbest-honke">woolisbest</a>  
+ - <a href="https://github.com/mino-hobby-pro">mino</a>  
+ - <a href="https://github.com/myproxy0108-prog">ねむい</a>  
+ - <a href="https://github.com//raku-ringo">raku-ringo</a>  
+ - <a href="https://github.com/Sou930">Sou930</a>  
+ - <a href="https://github.com/KA1121Studio">KA1121Studio</a>  
+ - kaki riki 
 
 ---
 
