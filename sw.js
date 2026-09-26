@@ -1,54 +1,57 @@
 // MIN-Tube-Pro Service Worker
-const CACHE_NAME = 'min-wlyt-plus';
+const CACHE_NAME = 'min-wlyt-plus-v2';
 const PRECACHE = [
-  '/public/min-tube-pro.html',
-  '/img/min-tube-pro.png',
+  '/youtube-pro',
+  '/manifest.json',
+  '/min-img.png',
+  '/classroom.192',
+  '/classroom.512',
 ];
 
-// インストール時: 静的リソースをキャッシュ
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE))
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(PRECACHE))
+      .then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
-// 有効化時: 古いキャッシュを削除
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-      )
-    )
+    caches.keys().then(keys => Promise.all(
+      keys
+        .filter(key => (key === 'min-wlyt-plus' || key.startsWith('min-wlyt-plus-')) && key !== CACHE_NAME)
+        .map(key => caches.delete(key))
+    )).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// フェッチ: キャッシュファースト → ネットワーク → オフラインフォールバック
 self.addEventListener('fetch', event => {
-  // POST等は無視
-  if (event.request.method !== 'GET') return;
+  const request = event.request;
+  if (request.method !== 'GET') return;
 
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
 
-      return fetch(event.request)
-        .then(response => {
-          // 正常レスポンスをキャッシュに追加
-          if (response && response.status === 200 && response.type === 'basic') {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          }
-          return response;
-        })
-        .catch(() => {
-          // オフライン時: ナビゲーションはトップページを返す
-          if (event.request.mode === 'navigate') {
-            return caches.match('/');
-          }
-        });
-    })
-  );
+  // Keep the existing cache-first behavior for the site's pages and assets,
+  // including proxy frontends, while using only this app's own cache.
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(request);
+    if (cached) return cached;
+
+    try {
+      const response = await fetch(request);
+      if (response && response.status === 200 && response.type === 'basic') {
+        await cache.put(request, response.clone());
+      }
+      return response;
+    } catch (error) {
+      if (request.mode === 'navigate') {
+        const fallback = await cache.match('/youtube-pro');
+        if (fallback) return fallback;
+      }
+      throw error;
+    }
+  })());
 });
