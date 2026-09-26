@@ -2,26 +2,27 @@
   "name": "クラスルーム",
   "short_name": "クラスルーム",
   "description": "アプリランチャー — すばやく、快適に",
-  "start_url": "/public/min-tube-pro.html",
+  "start_url": "/youtube-pro",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0f1724",
   "theme_color": "#00d4ff",
   "orientation": "portrait-primary",
   "lang": "ja",
-"icons": [
-  {
-    "src": "/classroom.192",
-    "sizes": "192x192",
-    "type": "image/png",
-    "purpose": "any maskable"
-  },
-  {
-    "src": "/classroom.512",
-    "sizes": "512x512",
-    "type": "image/png",
-    "purpose": "any maskable"
-  }
-],
+  "icons": [
+    {
+      "src": "/classroom.192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/classroom.512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
   "screenshots": [],
   "categories": ["entertainment", "utilities"]
 }
