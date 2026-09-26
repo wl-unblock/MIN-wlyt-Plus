@@ -2,11 +2,12 @@ version: 1
 services:
   - type: web
     name: min-wlyt-plus
-    env: node
+    runtime: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm ci
     startCommand: npm start
+    healthCheckPath: /healthz
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
-        value: 16
+        value: "24"
