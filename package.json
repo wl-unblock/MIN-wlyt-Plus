@@ -1,6 +1,6 @@
 {
   "name": "min-wlyt-plus",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "min-wlyt-plus is smart youtube watcher",
   "main": "index.js",
   "scripts": {
