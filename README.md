@@ -71,6 +71,7 @@ node index.js
  - Node.js 24の指定を`package.json`・`.nvmrc`・Render／Railway設定で統一し、デプロイ時の依存関係インストールを`npm ci`に変更。
  - 起動・ヘルスチェック・PWA設定を確認する静的テスト5件を追加。
  - プロキシ／フィルター回避ロジックは変更なし。
+
 ### ver1.0.4
  - Elixir-networkでのnode errorを修正。
  - 漫画raw・anime・映画は著作権違反ページ（dmca）に転移するように修正。（これによりrenderやrailwayにデプロイした際にbanされるリスクが低くなります、あとねむいが作ったやつ普通に犯罪だからこっちgithubアカウントとかbanされたらだるい。minoには許可とった。）
