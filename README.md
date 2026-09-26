@@ -9,34 +9,34 @@ CG / YouTube web app.
 ## 特徴
 
 - **軽量:** HTML + JavaScript ベースのシンプル構成
-- **ホスティングしやすい:** Vercel / Render / Railway などの PaaS に対応しやすい構造
-- **Node.js 対応:** `index.js` + `Procfile` によるサーバー起動が可能
+- **ホスティングしやすい:** Vercel / Render などの PaaS に対応しやすい構造（Railway は設定方式の確認が必要）
+- **Node.js 対応:** Node.js 24.x を推奨。`index.js` + `Procfile` で起動可能
 - **設定ファイル付き:** `render.yaml` / `railway.json` などのデプロイ設定ファイルを同梱
 
 ---
 
 ## デプロイ
 
-ワンクリックで自分の環境にデプロイできます。
+デプロイボタンを用意しています。各PaaSの現在の仕様・利用規約を確認してから利用してください。
 
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/woolisbest-honke/min-wlyt-plus)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wl-unblock/MIN-wlyt-Plus)
 
 ### Render
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/woolisbest-honke/min-wlyt-plus)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/wl-unblock/MIN-wlyt-Plus)
 
 ### Railway
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?templateUrl=https://github.com/woolisbest-honke/min-wlyt-plus)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?templateUrl=https://github.com/wl-unblock/MIN-wlyt-Plus)
 
 ---
 
 ## 必要要件
 
-- **Node.js** (推奨: LTS)
-- **npm** または **yarn**
+- **Node.js** (推奨: 24.x LTS)
+- **npm**（`package-lock.json` を使用）
 
 ---
 
@@ -44,13 +44,20 @@ CG / YouTube web app.
 
 ```bash
 # 依存関係のインストール
-npm install
+npm ci
 
 # 開発サーバー起動
 npm start
 # または
 node index.js
 ```
+
+### 安定性・デプロイの補足
+
+- `npm ci` はコミット済みの `package-lock.json` に従って依存関係をインストールします。
+- `npm test` で、ランタイム指定・ヘルスチェック・PWAの配信パスに関する静的テストを実行できます。
+- ホスティングのヘルスチェックには `/healthz` を指定してください。このエンドポイントは外部APIに依存せず、HTTP 200を返します。
+- Railwayの `railway.json` は従来のConfig-as-Code方式です。新規サービスでは使用できず、既存設定も2026年12月1日までに移行するよう案内されています。新規デプロイ前に[Railwayの現行設定ガイド](https://docs.railway.com/config-as-code/reference)を確認してください。
 
 ---
 
@@ -59,6 +66,11 @@ node index.js
  - Elixir-network、stream-proxy、nodeproxyを修正。
  - index.jsからwispserverを建て、localhostへのリクエストも可能にする。
  - 依存関係の整理
+ - `/healthz` を追加し、Render／Railwayのヘルスチェックを外部サービスに依存しないエンドポイントへ変更。
+ - PWAのmanifest・Service Worker・アイコンの配信ルートを修正し、起動先を`/youtube-pro`に統一。オフライン時のフォールバックとキャッシュ更新範囲も見直し。
+ - Node.js 24の指定を`package.json`・`.nvmrc`・Render／Railway設定で統一し、デプロイ時の依存関係インストールを`npm ci`に変更。
+ - 起動・ヘルスチェック・PWA設定を確認する静的テスト5件を追加。
+ - プロキシ／フィルター回避ロジックは変更なし。
 ### ver1.0.4
  - Elixir-networkでのnode errorを修正。
  - 漫画raw・anime・映画は著作権違反ページ（dmca）に転移するように修正。（これによりrenderやrailwayにデプロイした際にbanされるリスクが低くなります、あとねむいが作ったやつ普通に犯罪だからこっちgithubアカウントとかbanされたらだるい。minoには許可とった。）
