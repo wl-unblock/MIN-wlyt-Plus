@@ -1,10 +1,14 @@
 {
+  "$schema": "https://railway.com/railway.schema.json",
   "build": {
+    "buildCommand": "npm ci",
     "env": {
-      "NODE_VERSION": "16"
+      "NODE_VERSION": "24"
     }
   },
-  "start": {
-    "command": "node index.js"
+  "deploy": {
+    "startCommand": "npm start",
+    "healthcheckPath": "/healthz",
+    "healthcheckTimeout": 300
   }
 }
