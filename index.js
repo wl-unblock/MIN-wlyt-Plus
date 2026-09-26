@@ -45,6 +45,11 @@ const PROXY_DIR = path.join(__dirname, 'proxy');
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 
+// Lightweight endpoint for hosting-platform health checks; it does not depend on upstream APIs.
+app.get("/healthz", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 let apiListCache = [];
 
 async function updateApiListCache() {
@@ -1569,21 +1574,21 @@ app.get("/sys-update", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "app/update.html"));
 });
 
-app.get("/classroom.192", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "img/classroom.192.png"));
+app.get("/classroom.192", (_req, res) => {
+  res.sendFile(path.join(__dirname, "img", "classroom.192.png"));
 });
 
-app.get("/classroom.512", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "img/classroom.512.png"));
+app.get("/classroom.512", (_req, res) => {
+  res.sendFile(path.join(__dirname, "img", "classroom.512.png"));
 });
 
 
-app.get("/manifest.json", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "manifest.json"));
+app.get("/manifest.json", (_req, res) => {
+  res.sendFile(path.join(__dirname, "manifest.json"));
 });
 
-app.get("/sw.js", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "sw.js"));
+app.get("/sw.js", (_req, res) => {
+  res.sendFile(path.join(__dirname, "sw.js"));
 });
 
 app.get("/wool", (req, res) => {
