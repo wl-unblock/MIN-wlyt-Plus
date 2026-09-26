@@ -6,9 +6,13 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "test": "node --test",
     "build:ts": "tsc",
     "dev:react": "vite",
     "build:react": "vite build"
+  },
+  "engines": {
+    "node": ">=24 <25"
   },
   "keywords": [
     "youtube",
@@ -26,17 +30,13 @@
     "node-fetch": "^2.6.7",
     "undici": "^6.19.8",
     "youtube-search-api": "^1.2.2",
-
     "@mercuryworkshop/wisp-js": "^0.5.0",
     "dotenv": "^16.3.1",
-
     "axios": "^1.6.0",
     "cheerio": "^1.0.0-rc.12",
-
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "vite": "^5.2.0",
-
     "youtubei": "^1.4.0"
   },
   "devDependencies": {
@@ -46,7 +46,6 @@
     "@types/express": "^4.17.21",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-
     "nodemon": "^3.0.1",
     "bun-types": "^1.0.0"
   }
